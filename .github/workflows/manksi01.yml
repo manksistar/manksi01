@@ -1,4 +1,4 @@
-name: ZenitsuPrjkt
+name: MarcelCyan
 
 on: workflow_dispatch
 
@@ -12,12 +12,14 @@ jobs:
     - name: Download Ngrok.
       run: |
         Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-        Invoke-WebRequest https://raw.githubusercontent.com/ZenitsuPrjkt/free-rdp/master/start.bat -OutFile start.bat
-        Invoke-WebRequest https://raw.githubusercontent.com/ZenitsuPrjkt/free-rdp/master/loop.bat -OutFile loop.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/MarcelCyan/FreeRDP/master/start.bat -OutFile start.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/MarcelCyan/FreeRDP/master/wallpaper.png -OutFile wallpaper.png
+        Invoke-WebRequest https://raw.githubusercontent.com/MarcelCyan/FreeRDP/master/wallpaper.bat -OutFile wallpaper.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/MarcelCyan/FreeRDP/master/loop.bat -OutFile loop.bat
     - name: Download Launcher.
       run: |
-        Invoke-WebRequest https://raw.githubusercontent.com/ZenitsuPrjkt/free-rdp/master/launcher/Node.js.lnk -OutFile Node.js.lnk
-        Invoke-WebRequest https://raw.githubusercontent.com/ZenitsuPrjkt/free-rdp/master/launcher/Visual%20Studio%202019.lnk -OutFile "Visual Studio 2019.lnk"
+        Invoke-WebRequest https://raw.githubusercontent.com/MarcelCyan/FreeRDP/master/launcher/Node.js.lnk -OutFile Node.js.lnk
+        Invoke-WebRequest https://raw.githubusercontent.com/MarcelCyan/FreeRDP/master/launcher/Visual%20Studio%202019.lnk -OutFile "Visual Studio 2019.lnk"
     - name: Extracting Ngrok File.
       run: Expand-Archive ngrok.zip
     - name: Connect To Account Ngrok.
@@ -29,6 +31,8 @@ jobs:
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+        copy wallpaper.png D:\a\wallpaper.png
+        copy wallpaper.bat D:\a\wallpaper.bat
         copy Node.js.lnk C:\Users\Public\Desktop\Node.js.lnk
         copy "Visual Studio 2019.lnk" "C:\Users\Public\Desktop\Visual Studio 2019.lnk"
     - name: Make Tunnel.
